@@ -1,0 +1,761 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RYC AI Jumpstart, 15 minutes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Coming+Soon&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --pink:#e03870; --blue:#3870e0; --navy:#091f77;
+  --gray:#dbdae5; --mint:#a8ffb2; --white:#fff;
+  --wash:#f8f8fa; --gray2:#f0f0f5; --navy4:#6573aa; --navy3:#4f5f9e;
+  --pink-t:#f9d7e2; --blue-t:#d7e2f9; --mint-t:#deffe1;
+  --fg:#091f77;
+  --display:'Bricolage Grotesque',system-ui,sans-serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --hand:'Coming Soon','Comic Sans MS',cursive;
+  --sh:0 2px 14px rgba(9,31,119,.09);
+  --sh-lg:0 10px 34px rgba(9,31,119,.14);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--wash);color:var(--fg);font-family:var(--sans);
+  font-weight:400;line-height:1.55;font-size:16.5px;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--display);letter-spacing:-.03em;line-height:1.06}
+a{color:var(--blue)}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px}
+
+.hero{background:var(--navy);color:#fff;position:relative;overflow:hidden;padding:60px 0 0}
+.hero .wrap{position:relative;z-index:2}
+.stripes{position:absolute;inset:0;z-index:1;opacity:.5}
+.stripes span{position:absolute;top:-40%;height:180%;width:16px;background:rgba(255,255,255,.05);transform:rotate(14deg)}
+.wm{font-family:var(--display);font-weight:800;font-size:clamp(29px,5vw,42px);line-height:.86;
+  letter-spacing:-.045em;margin-bottom:32px}
+.wm i{display:block;font-style:normal}
+.wm .r{color:#ff7ba3}.wm .y{color:#9dbaff}.wm .c{color:#fff}
+.hero h1{font-size:clamp(38px,7.4vw,66px);font-weight:800;margin:0 0 16px;color:#fff}
+.hero .sub{font-size:clamp(17px,2.4vw,21px);color:#c9d3ff;max-width:45ch;margin:0 0 28px}
+.hero .sub b{color:#fff;font-weight:600}
+.hand{font-family:var(--hand);color:var(--mint);font-size:25px;display:block;margin:0 0 8px;transform:rotate(-2deg)}
+.metabar{display:flex;flex-wrap:wrap;gap:9px;padding:0 0 38px}
+.chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;
+  border-radius:999px;padding:7px 16px;font-size:13.5px;font-weight:600}
+.startline{height:22px;background:repeating-linear-gradient(102deg,var(--pink) 0 22px,var(--white) 22px 44px)}
+
+.switch{position:sticky;top:0;z-index:40;background:rgba(248,248,250,.94);
+  backdrop-filter:blur(9px);padding:11px 0}
+.switch .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.switch .lbl{font-size:12px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--navy4)}
+.tabs{display:flex;gap:6px;background:var(--gray2);padding:4px;border-radius:999px}
+.tabs button{font-family:var(--sans);font-weight:700;font-size:14px;color:var(--navy3);
+  background:none;border:0;padding:8px 20px;border-radius:999px;cursor:pointer;transition:.16s}
+.tabs button:hover{color:var(--navy)}
+.tabs button[aria-selected="true"]{background:var(--pink);color:#fff;box-shadow:0 3px 12px rgba(224,56,112,.34)}
+.tabs button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+section{padding:66px 0 0}
+section:last-of-type{padding-bottom:20px}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--pink);margin:0 0 10px}
+h2{font-size:clamp(27px,4vw,38px);font-weight:800;margin:0 0 14px}
+h3{font-size:20px;font-weight:700;margin:32px 0 10px}
+p{margin:0 0 14px;max-width:70ch}
+.lead{font-size:18px;color:var(--navy3);max-width:62ch}
+
+.cards{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));margin:22px 0}
+.card{background:#fff;border-radius:20px;padding:22px;box-shadow:var(--sh);transition:transform .18s,box-shadow .18s}
+.card:hover{transform:translateY(-3px) rotate(-.4deg);box-shadow:var(--sh-lg)}
+.card .k{font-family:var(--display);font-weight:800;font-size:13px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--pink);margin-bottom:8px}
+.card h4{font-weight:800;font-size:21px;margin:0 0 8px}
+.card p{font-size:15px;color:var(--navy3);margin:0 0 12px}
+.card p:last-child{margin-bottom:0}
+.card .names{font-size:13px;color:var(--navy4);border-top:1px solid var(--gray2);padding-top:10px;margin:0}
+.card .names b{color:var(--navy);font-weight:600}
+
+.callout{border-radius:20px;padding:20px 24px;margin:22px 0;box-shadow:var(--sh)}
+.callout p:last-child{margin-bottom:0}
+.callout.pink{background:var(--pink);color:#fff}
+.callout.mint{background:var(--mint-t)}
+.callout.blue{background:var(--blue-t)}
+.callout.gray{background:var(--gray2);box-shadow:none}
+.callout .t{font-family:var(--display);font-weight:800;font-size:18px;margin:0 0 8px;letter-spacing:-.02em}
+
+.split{display:grid;gap:16px;grid-template-columns:1fr 1fr;margin:24px 0}
+.half{border-radius:20px;padding:24px;color:#fff}
+.half.a{background:var(--navy)}
+.half.b{background:var(--blue)}
+.half .tag{font-family:var(--hand);font-size:22px;display:block;margin-bottom:6px;opacity:.9}
+.half h4{font-weight:800;font-size:26px;margin:0 0 10px}
+.half p{color:rgba(255,255,255,.88);font-size:15px;margin:0 0 10px}
+.half .kw{display:inline-block;background:rgba(255,255,255,.16);border-radius:999px;
+  padding:5px 14px;font-size:13px;font-weight:700}
+
+.tblwrap{overflow-x:auto;margin:20px 0;border-radius:20px;box-shadow:var(--sh);background:#fff}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th{background:var(--navy);color:#fff;text-align:left;padding:13px 16px;
+  font-family:var(--display);font-weight:700;font-size:13.5px}
+td{padding:13px 16px;border-top:1px solid var(--gray2);vertical-align:top;color:var(--navy3)}
+td:first-child{color:var(--navy);font-weight:600}
+tbody tr:hover td{background:var(--wash)}
+.pill{display:inline-block;border-radius:999px;padding:3px 11px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.pill.p{background:var(--pink-t);color:#a11c4c}
+.pill.b{background:var(--blue-t);color:#20489c}
+
+.lane{margin:26px 0;border-radius:20px;overflow:hidden;box-shadow:var(--sh);background:#fff}
+.lrow{display:grid;grid-template-columns:74px 1fr;transition:background .16s}
+.lrow+.lrow{box-shadow:inset 0 1px 0 var(--gray2)}
+.lrow:hover{background:var(--wash)}
+.ltime{background:var(--navy);color:#fff;font-family:var(--display);font-weight:800;font-size:15px;
+  display:flex;align-items:center;justify-content:center;padding:16px 6px}
+.lrow.big .ltime{background:var(--pink)}
+.lbody{padding:15px 20px}
+.lbody .lt{font-family:var(--display);font-weight:800;font-size:17px;margin:0 0 4px;letter-spacing:-.02em}
+.lbody .lw{font-size:14px;color:var(--navy4);margin:0}
+.lbody .lw b{color:var(--pink);font-weight:700}
+
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:14px 0}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 12px 42px;font-size:15.5px}
+ol.steps li:last-child{padding-bottom:0}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:-1px;width:27px;height:27px;
+  border-radius:50%;background:var(--blue-t);color:var(--navy);font-family:var(--display);
+  font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+ul.check{list-style:none;padding:0;margin:14px 0}
+ul.check li{position:relative;padding:0 0 11px 34px;font-size:15.5px}
+ul.check li::before{content:"";position:absolute;left:0;top:3px;width:19px;height:19px;
+  border-radius:6px;border:2px solid var(--blue);background:#fff}
+ul.plain{padding-left:20px}
+ul.plain li{margin-bottom:8px}
+kbd{font-family:var(--sans);font-weight:700;background:var(--gray2);border-radius:6px;
+  padding:2px 7px;font-size:14px;color:var(--navy);white-space:nowrap}
+
+.pane{display:none}
+.pane.on{display:block;animation:fade .22s ease}
+@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.pbox{background:#fff;border-radius:20px;padding:22px 24px;box-shadow:var(--sh);
+  border-left:5px solid var(--pink);margin:16px 0}
+.pbox .ph{display:flex;align-items:center;gap:9px;margin-bottom:10px;flex-wrap:wrap}
+.pbox .ph .nm{font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:-.02em}
+.pbox .ph .badge{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:#fff;background:var(--pink);border-radius:999px;padding:3px 10px}
+.pbox .gotcha{margin:14px 0 0;padding:12px 16px;background:var(--mint-t);border-radius:12px;font-size:14.5px}
+.pbox p{font-size:15px}
+
+.block{margin:22px 0;border-radius:20px;overflow:hidden;box-shadow:var(--sh-lg);background:var(--navy)}
+.bhead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 20px;flex-wrap:wrap}
+.bhead .bt{font-family:var(--display);font-weight:800;color:#fff;font-size:17px;letter-spacing:-.02em}
+.bhead .bs{font-size:13px;color:#a9b6ee;margin:2px 0 0}
+.copy{font-family:var(--sans);font-weight:700;font-size:13.5px;background:var(--pink);color:#fff;
+  border:0;border-radius:999px;padding:9px 20px;cursor:pointer;transition:.16s;white-space:nowrap}
+.copy:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(224,56,112,.45)}
+.copy:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.copy.done{background:var(--mint);color:var(--navy)}
+pre{margin:0;background:#050f42;color:#dfe5ff;padding:20px;overflow-x:auto;
+  font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.6px;line-height:1.62;max-height:420px}
+
+.kit{background:#fff;border-radius:20px;padding:8px 4px;box-shadow:var(--sh);margin:22px 0}
+.krow{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;padding:16px 20px}
+.krow+.krow{box-shadow:inset 0 1px 0 var(--gray2)}
+.kname{font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:600;color:var(--navy);
+  background:var(--gray2);border-radius:10px;padding:6px 12px;white-space:nowrap}
+.krow p{margin:4px 0 0;font-size:15px;color:var(--navy3)}
+.tryit{background:var(--navy);color:#fff;border-radius:20px;padding:24px;margin:22px 0}
+.tryit .t{font-family:var(--hand);font-size:24px;color:var(--mint);margin:0 0 10px}
+.tryit code{display:block;background:rgba(255,255,255,.09);border-radius:12px;padding:15px 18px;
+  font-family:ui-monospace,Menlo,monospace;font-size:13.5px;color:#fff;line-height:1.6;white-space:pre-wrap}
+.tryit .note{margin:14px 0 0;color:#c9d3ff;font-size:15px}
+footer{background:var(--navy);color:#fff;margin-top:66px;padding:44px 0 40px}
+footer .fh{font-family:var(--hand);font-size:30px;color:var(--mint);margin:0 0 8px}
+footer h3{font-size:24px;margin:0 0 10px;color:#fff}
+footer p{color:#b6c1ee;font-size:14.5px;max-width:56ch}
+
+@media(max-width:680px){
+  .split{grid-template-columns:1fr}
+  .lrow{grid-template-columns:62px 1fr}
+  .krow{grid-template-columns:1fr;gap:8px}
+  body{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+@media print{
+  .switch,.copy{display:none}
+  .pane{display:block!important}
+  body{background:#fff;font-size:11pt}
+  .hero,footer{background:#091f77!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  section{page-break-inside:avoid;padding:24px 0 0}
+  pre{max-height:none}
+}
+</style>
+
+<header class="hero">
+  <div class="stripes">
+    <span style="left:6%"></span><span style="left:15%"></span><span style="left:27%"></span>
+    <span style="left:63%"></span><span style="left:72%"></span><span style="left:84%"></span><span style="left:93%"></span>
+  </div>
+  <div class="wrap">
+    <div class="wm"><i class="r">run</i><i class="y">your</i><i class="c">city</i></div>
+    <span class="hand">fifteen minutes, start to finish</span>
+    <h1>AI Jumpstart</h1>
+    <p class="sub">By the end you will have a working RYC assistant that knows our brand, our numbers, and our files. <b>Pick one tool and stay in it.</b> The others take five minutes each, later.</p>
+    <div class="metabar">
+      <span class="chip">Claude</span>
+      <span class="chip">ChatGPT</span>
+      <span class="chip">Gemini</span>
+      <span class="chip">6 steps</span>
+      <span class="chip">Updated August 2026</span>
+    </div>
+  </div>
+  <div class="startline"></div>
+</header>
+
+<div class="switch">
+  <div class="wrap">
+    <span class="lbl">I am using</span>
+    <div class="tabs" role="tablist" aria-label="Choose your platform">
+      <button role="tab" aria-selected="true" data-p="claude">Claude</button>
+      <button role="tab" aria-selected="false" data-p="chatgpt">ChatGPT</button>
+      <button role="tab" aria-selected="false" data-p="gemini">Gemini</button>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<section class="wrap">
+  <p class="eyebrow">Everything is in one folder</p>
+  <h2>Your starter kit</h2>
+  <p class="lead">Download <b>RYC-AI-Starter-Kit</b> before we begin. Nothing to hunt for during the workshop.</p>
+  <div class="kit">
+    <div class="krow">
+      <span class="kname">BLOCK-A</span>
+      <div><b>The shared RYC instructions</b><p>Everyone pastes this, on every platform. One copy button away.</p></div>
+    </div>
+    <div class="krow">
+      <span class="kname">BLOCK-B</span>
+      <div><b>Condensed brand rules</b><p>ChatGPT and Gemini only. Claude users skip it.</p></div>
+    </div>
+    <div class="krow">
+      <span class="kname">1-upload-to-your-project/</span>
+      <div><b>Three documents</b><p>Chapter Playbook, 2026 Goals, 2025 Annual Report. Select all, upload, done.</p></div>
+    </div>
+    <div class="krow">
+      <span class="kname">2-install-as-a-skill/</span>
+      <div><b>ryc-brand.zip</b><p>Claude users only. Leave it zipped.</p></div>
+    </div>
+  </div>
+  <h3>Also check before we start</h3>
+  <ul class="check">
+    <li>You are logged in to your tool, in the browser you are using now</li>
+    <li>You are logged in to the <b>Google account the RYC Drive is shared with</b>, same browser</li>
+    <li>Plans: Claude needs Pro or above. ChatGPT needs a paid plan. Gemini Gems are free, but knowledge files and Drive need a paid Google AI or Workspace plan</li>
+    <li>Every other tab closed. Fifteen minutes goes fast</li>
+  </ul>
+</section>
+
+<section class="wrap">
+  <p class="eyebrow">The three pieces</p>
+  <h2>What we are building</h2>
+  <p class="lead">Different names in each tool, same three jobs.</p>
+  <div class="cards">
+    <div class="card">
+      <p class="k">Piece one</p>
+      <h4>The Project</h4>
+      <p>A folder that remembers who RYC is, so you stop re-explaining us every time.</p>
+      <p class="names">Claude <b>Project</b> &middot; ChatGPT <b>Project</b> &middot; Gemini <b>Gem</b></p>
+    </div>
+    <div class="card">
+      <p class="k">Piece two</p>
+      <h4>The Connector</h4>
+      <p>A live pipe to our Google Drive, so it reads the real files instead of guessing.</p>
+      <p class="names">Claude <b>Connectors</b> &middot; ChatGPT <b>Apps</b> &middot; Gemini <b>Workspace</b></p>
+    </div>
+    <div class="card">
+      <p class="k">Piece three</p>
+      <h4>The Skill</h4>
+      <p>A reusable instruction pack the AI grabs on its own when it recognizes the task.</p>
+      <p class="names">Claude <b>Skills</b> &middot; ChatGPT and Gemini <b>no equivalent</b></p>
+    </div>
+  </div>
+  <div class="callout pink">
+    <p><b>The one-sentence version.</b> The Project is who we are. The Connector is what we have. The Skill is how we do it.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <p class="eyebrow">The question everyone asks</p>
+  <h2>Skill or Project?</h2>
+  <p class="lead">When does something belong in project knowledge, and when does it need to be a skill? Here is the line.</p>
+
+  <div class="split">
+    <div class="half a">
+      <span class="tag">who we are</span>
+      <h4>Project</h4>
+      <p>Holds <b>facts and files</b>. Loads every single time, in every chat inside that project, whether you need it or not.</p>
+      <p>Walled. Invisible from anywhere else.</p>
+      <span class="kw">nouns</span>
+    </div>
+    <div class="half b">
+      <span class="tag">how we do it</span>
+      <h4>Skill</h4>
+      <p>Holds <b>rules for producing output</b>. Sits dormant until the AI recognizes a matching task, then loads itself.</p>
+      <p>Follows you into every chat and every project on your account.</p>
+      <span class="kw">verbs</span>
+    </div>
+  </div>
+
+  <h3>Two tests that settle it</h3>
+  <div class="callout gray">
+    <p class="t">Test 1: is it true regardless of the task?</p>
+    <p>"We have 100+ chapters" is true whether you are writing a grant or planning a board agenda. That is <b>project knowledge</b>.</p>
+    <p>"Headlines are Bricolage Grotesque, never use em dashes" only matters when you are actually producing something. That is a <b>skill</b>.</p>
+  </div>
+  <div class="callout gray">
+    <p class="t">Test 2: do you want it outside this project?</p>
+    <p>You need brand rules when you are drafting a flyer inside the RYC project, and also when a chapter lead pings you in a random chat, and also when you are making a joint RYC and Stanford one-pager in a completely different project. Project knowledge cannot reach any of those. A skill can. <b>That is why brand is a skill.</b></p>
+  </div>
+
+  <h3>Where RYC things live</h3>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Thing</th><th>Where</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Chapter Playbook, Annual Report, 2026 Goals</td><td><span class="pill b">Project</span></td><td>Reference material you look things up in</td></tr>
+        <tr><td>Story bank</td><td><span class="pill b">Project</span></td><td>Source material for real quotes</td></tr>
+        <tr><td>Impact numbers, program models, mission</td><td><span class="pill b">Project instructions</span></td><td>Always true, needed in every answer</td></tr>
+        <tr><td>What we need help with, who is on the team</td><td><span class="pill b">Project instructions</span></td><td>Context about our situation</td></tr>
+        <tr><td>Brand colors, fonts, logo rules, voice, tone</td><td><span class="pill p">Skill</span></td><td>Rules for producing output. Needed outside the project too</td></tr>
+        <tr><td>How Mary writes as herself</td><td><span class="pill p">Skill</span></td><td>Same reason. Follows her into any chat</td></tr>
+        <tr><td>A repeatable workflow, like onboarding a new chapter</td><td><span class="pill p">Skill</span></td><td>Procedure, not fact</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Do I need to ask for ryc-brand by name?</h3>
+  <p>Usually no. Skills load themselves when your request matches the skill's description, and this one is written to catch anything external-facing. Name it explicitly in four cases:</p>
+  <ul class="plain">
+    <li><b>The output came back off-brand.</b> Wrong fonts, em dashes, corporate tone. The skill did not fire. Say "use the ryc-brand skill and redo that"</li>
+    <li><b>Your ask does not sound like a design task.</b> "Write something up for the chapter leads" gives no signal that it leaves the building</li>
+    <li><b>The conversation has drifted.</b> Long threads wander. Naming it again snaps it back</li>
+    <li><b>You are outside the RYC project.</b> No project context means the skill is doing all the work, so make sure it fires</li>
+  </ul>
+  <div class="callout blue">
+    <p>In claude.ai you name it in plain language, not with a slash. "Use the ryc-brand skill" or "apply our brand guide" both work. Slash commands are a Claude Code thing.</p>
+  </div>
+  <div class="callout mint">
+    <p class="t">Rule of thumb</p>
+    <p>If you keep re-explaining the same <b>how</b>, that is a skill. If you keep re-attaching the same <b>file</b>, that belongs in the project.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <p class="eyebrow">Facilitator</p>
+  <h2>Run of show</h2>
+  <div class="lane">
+    <div class="lrow"><div class="ltime">0:00</div><div class="lbody"><p class="lt">Why we are doing this</p><p class="lw">One before-and-after demo, live. <b>Keep it to one</b></p></div></div>
+    <div class="lrow"><div class="ltime">1:30</div><div class="lbody"><p class="lt">Pre-flight</p><p class="lw">Everyone confirms in chat: logged in, right plan, kit downloaded. <b>Free-tier folks pair up</b></p></div></div>
+    <div class="lrow big"><div class="ltime">2:00</div><div class="lbody"><p class="lt">Step 1: build the Project</p><p class="lw">Create, name, paste Block A, upload folder 1. <b>Thumbs up at each sub-step</b></p></div></div>
+    <div class="lrow big"><div class="ltime">7:00</div><div class="lbody"><p class="lt">Step 2: connect Google Drive</p><p class="lw">Authorize and test. <b>The Google popup is where people get stuck</b></p></div></div>
+    <div class="lrow big"><div class="ltime">10:00</div><div class="lbody"><p class="lt">Step 3: add the Skill</p><p class="lw">Upload takes 30 seconds. <b>Spend the rest on skill vs project</b></p></div></div>
+    <div class="lrow"><div class="ltime">12:30</div><div class="lbody"><p class="lt">Test</p><p class="lw">Everyone runs the same prompt and reads it out loud. <b>This is the payoff, do not skip it</b></p></div></div>
+    <div class="lrow"><div class="ltime">14:00</div><div class="lbody"><p class="lt">Close</p><p class="lw">Homework and where to get help. <b>One ask: use it once this week</b></p></div></div>
+  </div>
+  <div class="callout pink">
+    <p><b>Facilitator rule.</b> Every step live on screen share, one at a time, thumbs up before moving on. Do not narrate ahead.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <p class="eyebrow">Step 1 &middot; 5 minutes</p>
+  <h2>Build the RYC Project</h2>
+
+  <div class="pane on" data-p="claude">
+    <div class="pbox">
+      <div class="ph"><span class="nm">Claude</span><span class="badge">Project</span></div>
+      <ol class="steps">
+        <li>Left sidebar, click <kbd>Projects</kbd>, then <kbd>New project</kbd></li>
+        <li>Name it <kbd>Run Your City</kbd>. Description: RYC executive and program support</li>
+        <li>Open the project, find <b>Add project instructions</b>, and paste <a href="#blocka">Block A</a></li>
+        <li>Click <b>Add files</b> and upload all three documents from <kbd>1-upload-to-your-project</kbd></li>
+      </ol>
+      <p class="gotcha"><b>Heads up.</b> Every chat has to be started from inside the project. A chat opened from the main sidebar will not see any of this.</p>
+    </div>
+  </div>
+  <div class="pane" data-p="chatgpt">
+    <div class="pbox">
+      <div class="ph"><span class="nm">ChatGPT</span><span class="badge">Project</span></div>
+      <ol class="steps">
+        <li>Left sidebar, click <kbd>Projects</kbd> (may show as a folder icon), then <kbd>New project</kbd></li>
+        <li>Name it <kbd>Run Your City</kbd></li>
+        <li>Open the project, find <b>Instructions</b>, and paste <a href="#blocka">Block A</a></li>
+        <li>Under <b>Files</b>, upload all three documents from <kbd>1-upload-to-your-project</kbd></li>
+      </ol>
+      <p class="gotcha"><b>Heads up.</b> Every chat has to be started from inside the project. A chat opened from the main sidebar will not see any of this.</p>
+    </div>
+  </div>
+  <div class="pane" data-p="gemini">
+    <div class="pbox">
+      <div class="ph"><span class="nm">Gemini</span><span class="badge">Gem</span></div>
+      <ol class="steps">
+        <li>Go to gemini.google.com. Left sidebar, click <kbd>Gems</kbd> or <kbd>Explore Gems</kbd>, then <kbd>New Gem</kbd></li>
+        <li>Name it <kbd>Run Your City</kbd></li>
+        <li>In the <b>Instructions</b> box, paste <a href="#blocka">Block A</a>. Do not use the magic wand to rewrite it</li>
+        <li>Scroll to <b>Knowledge</b>, click <kbd>Add files</kbd>, then <b>Upload files</b>, and add all three from <kbd>1-upload-to-your-project</kbd></li>
+        <li>Click <kbd>Save</kbd></li>
+      </ol>
+      <p class="gotcha"><b>Two real gotchas.</b> Previewing does not save, so you have to click Save or Update or your work vanishes. And a Gem holds a maximum of 10 knowledge files, so three leaves you plenty of room to add more later.</p>
+    </div>
+  </div>
+  <div class="callout blue">
+    <p class="t">Why upload files if we are connecting Drive anyway?</p>
+    <p>Uploaded files are always loaded, every chat. Drive is searched only when the AI decides to look. Put the handful you always want in the project. Leave the other 400 in Drive.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <p class="eyebrow">Step 2 &middot; 3 minutes</p>
+  <h2>Connect Google Drive</h2>
+
+  <div class="pane on" data-p="claude">
+    <div class="pbox">
+      <div class="ph"><span class="nm">Claude</span><span class="badge">Connectors</span></div>
+      <ol class="steps">
+        <li>Go to <kbd>Settings</kbd>, then <kbd>Connectors</kbd></li>
+        <li>Find <b>Google Drive</b> and click <kbd>Connect</kbd></li>
+        <li>A Google window opens. Pick the account with RYC access and click <kbd>Allow</kbd></li>
+        <li>Back in a chat, click the tools icon in the message box and confirm Google Drive is on</li>
+      </ol>
+    </div>
+  </div>
+  <div class="pane" data-p="chatgpt">
+    <div class="pbox">
+      <div class="ph"><span class="nm">ChatGPT</span><span class="badge">Apps</span></div>
+      <ol class="steps">
+        <li>Profile icon, then <kbd>Settings</kbd>, then <kbd>Apps</kbd>. Your account may say <b>Connectors</b> or show a <b>Plugins</b> directory instead. OpenAI has renamed this three times, so use whichever you have</li>
+        <li>Find <b>Google Drive</b>, click <kbd>Connect</kbd>, authorize the RYC Google account</li>
+        <li>If you see a <b>Sync</b> option, turn it on. A large Drive can take hours to index, so start it and walk away</li>
+        <li>In a chat, summon it by typing <kbd>@</kbd> and picking Google Drive</li>
+      </ol>
+      <p class="gotcha"><b>If you are on a Business, Enterprise, or Edu workspace</b>, an admin may need to enable Google Drive before this appears. Flag it and move on.</p>
+    </div>
+  </div>
+  <div class="pane" data-p="gemini">
+    <div class="pbox">
+      <div class="ph"><span class="nm">Gemini</span><span class="badge">Workspace</span></div>
+      <ol class="steps">
+        <li>Drive is not a separate connector. It comes through the <b>Google Workspace</b> connection on your account</li>
+        <li>Check <kbd>Settings</kbd>, then <kbd>Apps</kbd>, and confirm <b>Google Workspace</b> is on. If it is off, Gemini will offer to connect it the first time you try</li>
+        <li>In a chat, type <kbd>@</kbd> and reference a Drive file or folder by name</li>
+      </ol>
+      <p class="gotcha"><b>Bonus.</b> Because Drive is native here, you can also add Drive files directly into your Gem's Knowledge (<kbd>Add files</kbd>, then <b>Drive</b>) and Gemini always reads the newest version.</p>
+    </div>
+  </div>
+
+  <div class="tryit">
+    <p class="t">test it right now</p>
+    <code>Find the RYC Chapter Playbook in my Google Drive and tell me the first section heading.</code>
+    <p class="note">A real heading back means you are connected. If it cannot find the file, you almost certainly authorized the wrong Google account. That is the failure 90 percent of the time.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <p class="eyebrow">Step 3 &middot; 2 minutes</p>
+  <h2>Add the Skill</h2>
+  <p class="lead">You are not writing one from scratch. We already have <b>ryc-brand</b>, the real thing, and you are installing it.</p>
+
+  <div class="pane on" data-p="claude">
+    <div class="pbox">
+      <div class="ph"><span class="nm">Claude</span><span class="badge">Skills</span></div>
+      <ol class="steps">
+        <li>Go to <kbd>Settings</kbd> and look for <kbd>Skills</kbd>. It sits under <b>Customize</b> on some accounts and <b>Capabilities</b> on others, so search Settings for the word</li>
+        <li>Turn on <b>Code execution and file creation</b> if it is not already. Skills will not run without it</li>
+        <li>Click <kbd>Add</kbd> or <kbd>+</kbd>, choose the upload option, and pick <kbd>ryc-brand.zip</kbd>. Leave it zipped</li>
+        <li>Confirm it appears in your list and is toggled <b>on</b></li>
+      </ol>
+      <p class="gotcha"><b>That is it.</b> It now works in every chat on your account, inside the RYC project or outside it. Skip Block B, you already have the fuller version.</p>
+    </div>
+  </div>
+  <div class="pane" data-p="chatgpt">
+    <div class="pbox">
+      <div class="ph"><span class="nm">ChatGPT</span><span class="badge">Workaround</span></div>
+      <p>There is no skills feature that matches this, and it will not accept the zip. Pick one:</p>
+      <ol class="steps">
+        <li><b>Fast:</b> paste <a href="#blockb">Block B</a> at the bottom of your project instructions, under Block A</li>
+        <li><b>Better:</b> build a Custom GPT (profile icon, then <kbd>My GPTs</kbd>, then <kbd>Create</kbd>) and paste Block B as its instructions</li>
+      </ol>
+      <p class="gotcha"><b>The trade-off.</b> Either way the rules only apply where you pasted them. They will not follow you into other chats the way a real skill does.</p>
+    </div>
+  </div>
+  <div class="pane" data-p="gemini">
+    <div class="pbox">
+      <div class="ph"><span class="nm">Gemini</span><span class="badge">Workaround</span></div>
+      <p>No skills feature, and it will not accept the zip. Paste <a href="#blockb">Block B</a> at the bottom of your Gem instructions, under Block A, then click <kbd>Save</kbd>.</p>
+      <p class="gotcha"><b>The trade-off.</b> The rules only apply inside this Gem. They will not follow you into other chats the way a real skill does.</p>
+    </div>
+  </div>
+
+  <div class="callout gray">
+    <p class="t">Note for whoever owns the zip</p>
+    <p>The bundle currently contains <kbd>SKILL.md</kbd> only. The file references an <kbd>assets/</kbd> folder with our CSS and icon kit, which is not included, so those paths will not resolve. Fine for writing and tone. It matters for HTML and web work.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <p class="eyebrow">Step 4 &middot; 1.5 minutes</p>
+  <h2>Test it</h2>
+  <p class="lead">Everyone opens a new chat <b>inside the project</b> and runs this exact prompt.</p>
+  <div class="tryit">
+    <p class="t">the payoff</p>
+    <code>Draft a 3-sentence Instagram caption announcing fall chapter signups are open.
+Then list every number you used and where you got it.</code>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <p class="k">Good answer</p>
+      <h4>What to look for</h4>
+      <p>Warm and kid-first, not corporate. Uses "together we can" or the starting-line language. No em dashes. It tells you which numbers it used and flags anything it is unsure about.</p>
+    </div>
+    <div class="card">
+      <p class="k">Bad answer</p>
+      <h4>If it comes back generic</h4>
+      <p>Either your instructions did not save, or you opened the chat outside the project. Check both, then run it again.</p>
+    </div>
+  </div>
+  <p>Read your caption out loud to the group. That is the workshop.</p>
+</section>
+
+<section class="wrap" id="blocka">
+  <p class="eyebrow">Copy and paste</p>
+  <h2>Block A: Project instructions</h2>
+  <p>Also in the kit as a text file. Do not edit it. If something here is wrong or out of date, flag it so we update the shared version.</p>
+  <div class="block">
+    <div class="bhead">
+      <div><div class="bt">Block A</div><p class="bs">Every platform. Everyone pastes the same text.</p></div>
+      <button class="copy" data-t="a">Copy Block A</button>
+    </div>
+<pre id="a">You are an executive advisor, strategist, researcher, grant writer, operations
+assistant, marketer, fundraiser, and all-around support agent for Run Your City
+(RYC), a U.S. nonprofit providing free, team-based youth running programs led by
+collegiate athletes. RYC is fully volunteer-run. 100% of donations go directly to
+programs.
+
+## Mission and vision
+
+Brand line: where every kid is empowered to reach their starting line
+
+Formal mission (grants, annual reports): build an inclusive community through
+running so every child, regardless of ability, gender, or socioeconomic
+background, grows into a healthy, confident, inspired individual.
+
+Vision: a world where all children have access to the physical, social, and
+emotional benefits of sports.
+
+Pillars: Belong (every kid welcome, no barriers), Move (joyful movement, never
+performance), Grow (confidence and grit, modeled by mentors)
+
+Tagline: together we can
+
+## Impact (as of August 2026, verify before any formal use)
+
+- 10,000+ children reached
+- 1,000+ collegiate athlete mentors
+- 100+ U.S. chapters across 34+ states and Washington DC
+- International: Bugesera, Rwanda (since 2022), Ogun, Nigeria (launched 2025),
+  Kochi, India (piloting 2026), Jamaica coming soon
+- 100% of donations go to programs
+
+## Program models, never conflate these
+
+U.S.: two 6-week seasons per year, one-hour weekly sessions, college-athlete led,
+inclusive design.
+
+International: annual 8-day camp including meals, healthcare, and education.
+
+## What I need help with
+
+Fundraising and partnerships: grant applications, donor updates, sponsorship
+decks, corporate partner research, tailored asks. Always surface that 100% of
+donations go directly to programs.
+
+Board and leadership: board-ready impact and finance summaries, governance best
+practice, warm professional communications to advisors and donors.
+
+Chapter and program operations: checklists, playbooks, and to-dos built on the
+6-week seasonal model. Outreach, volunteer training, participant retention.
+
+Communications and storytelling: newsletters, annual reports, social posts.
+Authentic, inspiring, impact-focused. Use only real stories, pulled from our
+story bank or the annual report. If you cannot find one, ask me for it.
+
+Marketing and brand: campaign concepts, content calendars, growth strategy,
+chapter-level templatable and localizable assets, proactive moments like National
+Runners Month, race partnerships, and season launches.
+
+Technology and data: CRM and dashboard decisions, internal tool scoping, framing
+program data for external audiences, digital product roadmap including the youth
+platform concept for ages 8 to 13 and COPPA compliance, Twilio and SMS.
+Recommend lightweight, cost-appropriate tools for a volunteer-run org.
+
+International expansion: program development across Rwanda, Nigeria, India, and
+Jamaica, each at a different maturity stage. Partner communications, MOU language,
+timelines, local team-facing materials. Hold financial boundaries while empowering
+local prioritization.
+
+## Brand
+
+The full brand rules live in the ryc-brand skill, which is the canonical source.
+Apply it to anything external-facing. The essentials, in case it does not load:
+
+Colors: pink #e03870, blue #3870e0, navy #091f77, light gray #dbdae5,
+mint #a8ffb2. Body text is navy, not black. Max 3 colors per layout.
+
+Type: Bricolage Grotesque for display and headlines and big numbers. DM Sans for
+body and UI. Coming Soon for one emotional handwritten word only, never body text.
+Poppins is retired, do not use it.
+
+## How to work with me
+
+- Concise, world-class, action-oriented. No filler, no commentary on your own work
+- Never use em dashes
+- Donor and funder content: professional and data-driven, lead with impact and
+  gratitude
+- Volunteer and community content: casual, warm, grateful
+- Operational content: sequenced, scannable, step-by-step
+- Always tie back to removing barriers and creating access for kids
+- Never fabricate a quote or a statistic. If you do not have a real one, ask me
+- If you are not sure a number or a fact is current, flag it instead of guessing
+- List anything I need to verify at the end, separately from the draft itself</pre>
+  </div>
+</section>
+
+<section class="wrap" id="blockb">
+  <h2>Block B: Brand rules, condensed</h2>
+  <div class="callout pink">
+    <p><b>Claude users skip this.</b> You installed the full ryc-brand skill in Step 3, which is longer and more complete. Pasting this too would only duplicate it.</p>
+  </div>
+  <p><b>ChatGPT and Gemini users:</b> paste this at the bottom of your instructions, under Block A.</p>
+  <div class="block">
+    <div class="bhead">
+      <div><div class="bt">Block B</div><p class="bs">ChatGPT and Gemini only</p></div>
+      <button class="copy" data-t="b">Copy Block B</button>
+    </div>
+<pre id="b"># RYC voice
+
+Warm, empowering, community-first, fun. Optimistic and human, never clinical.
+Kids lead every story.
+
+## Voice rules
+
+- Lead with the kids. They are the why
+- Second person for the reader (you, the donor or volunteer) plus collective
+  (we, together)
+- Short active sentences. "Volunteers mentor kids", not "kids are mentored"
+- Specific over generic. "10,000+ kids across 34+ states", not "many kids"
+- Celebrate volunteers as mentors and role models
+- In donor-facing content, always surface that 100% of donations go directly to
+  programming
+
+## Never
+
+- Em dashes, en dashes, or the middle dot
+- Deficit language about kids. Never "at-risk" or "disadvantaged"
+- Passive voice
+- Overpromising outcomes we have not measured
+- Stiff grant-speak in community-facing content
+- Fabricated quotes or statistics
+- Emoji anywhere except social media
+
+## Words we use
+
+free programming, no barriers, mentors, role models, starting line, joyful
+movement
+
+## Lines
+
+Brand line: where every kid is empowered to reach their starting line
+Tagline: together we can
+Pillars: Belong, Move, Grow
+
+## Differentiator to surface often
+
+RYC uses the elite student-athlete pipeline as a vehicle for community access,
+not exclusivity. Fully volunteer-run, zero overhead.
+
+## Before you hand me a draft
+
+List separately at the end: any statistic you used, any proper noun you were
+unsure about, and anything I should verify before it goes out.</pre>
+  </div>
+</section>
+
+<section class="wrap">
+  <p class="eyebrow">When it goes sideways</p>
+  <h2>Troubleshooting</h2>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Problem</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>No Projects, Skills, or Connectors in my sidebar</td><td>Check your plan. Claude needs Pro or above, ChatGPT needs a paid plan</td></tr>
+        <tr><td>Drive connects but finds nothing</td><td>You authorized the wrong Google account. Disconnect and redo with the account the RYC folder is shared with</td></tr>
+        <tr><td>Skills option is greyed out in Claude</td><td>Turn on Code execution and file creation in Settings first</td></tr>
+        <tr><td>Skill uploaded but never triggers</td><td>The zip needs the folder structure ryc-brand/SKILL.md, not a loose SKILL.md at the root. Check it is toggled on</td></tr>
+        <tr><td>My Gem forgot its files</td><td>You previewed without saving. Reopen the Gem, re-add under Knowledge, and click Save or Update</td></tr>
+        <tr><td>ChatGPT settings do not match this guide</td><td>OpenAI renamed Connectors to Apps to Plugins in the last year. Use whichever your account shows</td></tr>
+        <tr><td>Answers ignore the project facts</td><td>You are chatting outside the project. Project knowledge only loads in chats started from inside it</td></tr>
+        <tr><td>Answers ignore the brand rules</td><td>The skill did not fire. Say "use the ryc-brand skill and redo that"</td></tr>
+        <tr><td>It made up a number</td><td>Tell it so, then add the correct number to Block A</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="wrap">
+  <p class="eyebrow">Later</p>
+  <h2>Which tool for what</h2>
+  <div class="tblwrap">
+    <table>
+      <thead><tr><th>Tool</th><th>Best at</th></tr></thead>
+      <tbody>
+        <tr><td>Claude</td><td>Long documents, decks, spreadsheets, real skills, anything needing our brand applied precisely</td></tr>
+        <tr><td>ChatGPT</td><td>Fast drafting, images, broad app connections</td></tr>
+        <tr><td>Gemini</td><td>Anything already living in Google Drive, Docs, or Gmail. Zero setup on Drive</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>You do not have to pick one forever. Set the project up in all three eventually. Block A is the same everywhere.</p>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="fh">together we can</p>
+    <h3>Your homework, one thing</h3>
+    <p>Use it once this week for something real. A chapter email, a donor thank-you, a Slack post. When it gets something wrong, tell it, then update Block A so it never happens again.</p>
+    <p style="margin-top:18px">Stuck? Post in the team Slack channel with a screenshot of what you see.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var tabs = document.querySelectorAll('.tabs button');
+  function pick(p){
+    tabs.forEach(function(b){ b.setAttribute('aria-selected', b.dataset.p === p); });
+    document.querySelectorAll('.pane').forEach(function(el){
+      el.classList.toggle('on', el.dataset.p === p);
+    });
+  }
+  tabs.forEach(function(b){ b.addEventListener('click', function(){ pick(b.dataset.p); }); });
+
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var txt = document.getElementById(btn.dataset.t).innerText;
+      var label = btn.textContent;
+      navigator.clipboard.writeText(txt).then(function(){
+        btn.textContent = 'Copied';
+        btn.classList.add('done');
+        setTimeout(function(){ btn.textContent = label; btn.classList.remove('done'); }, 1800);
+      }).catch(function(){ btn.textContent = 'Select the text and copy'; });
+    });
+  });
+})();
+</script>
